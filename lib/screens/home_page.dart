@@ -1,7 +1,12 @@
+
 import 'package:flutter/material.dart';
-import 'package:myapp/models/task_model.dart';
 import 'package:myapp/services/task_service.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:myapp/providers/task_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:myapp/models/task_model.dart';
+import 'package:myapp/screens/components/build_task_list.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -11,6 +16,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final nameController = '';
+ 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,6 +46,16 @@ class _HomePageState extends State<HomePage> {
             focusedDay: DateTime.now(),
             firstDay: DateTime(2025),
             lastDay: DateTime(2027),
+          ),
+          Consumer<TaskProvider>(
+            builder:(context, taskProvider,child){
+              return buildTaskList(
+               taskProvider.tasks,
+               taskProvider.removeTask,
+               taskProvider.updateTask,
+
+              )
+            }
           ),
         ],
       ),
